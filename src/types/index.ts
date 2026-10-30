@@ -23,3 +23,12 @@ export interface TaskFilterProps{
     priority?: 'low' | 'medium' | 'high';
   }) => void;
 }
+export interface TaskFormData {
+  taskName: string;
+  status: TaskStatus;
+  priority: TaskPriority;
+  dueDate: string;
+}
+export interface TaskFormProps{
+    onAddTask:(formData:TaskFormProps)=>void
+}
