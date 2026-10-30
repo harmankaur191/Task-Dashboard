@@ -1,14 +1,11 @@
 import type { TaskItemProps } from "../../types";
 
-export default function TaskItem(task:TaskItemProps){
+export default function TaskItem({task,onStatusChange,onDelete}: TaskItemProps) {
     console.log(task)
 
-    return(
-        
-            
-                <li>
-                </li>)
-            
-        }
-        
-    
+    return (
+        <li>{task.title}
+        </li>)
+}
+
+
