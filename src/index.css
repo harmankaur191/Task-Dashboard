@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+input{
+    border:2px solid gray;
+}
+select{
+     border:2px solid gray;
+}
+h1{
+    font-size:xx-large;
+    font-weight: 700;
+    color:rgb(27, 19, 6);
+    padding:1%;
+    text-align: center;
+}

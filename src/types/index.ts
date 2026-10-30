@@ -5,6 +5,7 @@ export interface Task{
     description:string;
     status:TaskStatus;
     priority:'low'|'medium'|'high';
+    dueDate:string
 }
 export interface TaskListProps{
     task:Task[];
@@ -25,10 +26,11 @@ export interface TaskFilterProps{
 }
 export interface TaskFormData {
   taskName: string;
+  taskDescription:string;
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string;
 }
 export interface TaskFormProps{
-    onAddTask:(formData:TaskFormProps)=>void
+    onAddTask:(formData:TaskFormData)=>void
 }
