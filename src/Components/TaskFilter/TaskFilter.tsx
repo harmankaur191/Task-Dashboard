@@ -24,6 +24,12 @@ export default function TaskFilter({onFilterChange}:TaskFilterProps){
                 <option id = 'medium' value='medium'>Medium</option>
                 <option id = 'low' value='low'>Low</option>
             </select>
+            <select>
+                <option value="none">Sortby Due Date</option>
+                <option value="date-asc">Soonest</option>
+                <option value='date-desc'>Furthest</option>
+            </select>
         </section>
+        
     )
 }
