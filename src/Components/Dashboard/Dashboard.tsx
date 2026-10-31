@@ -3,11 +3,12 @@ import TaskForm from "../TaskForm/TaskForm";
 import TaskList from '../TaskList/TaskList'
 import type { TaskFormData, Task, TaskListProps, TaskFilterProps, TaskStatus } from "../../types";
 import TaskFilter from "../TaskFilter/TaskFilter";
+import sortTask from "../../utils/taskUtils";
 export default function Dashboard() {
     const [formDisplay, setFormDisplay] = useState(false);
     const [tasks,setTask]=useState<Task[]>([])
     const [editingTask,setEditingTask] = useState<Task|null>(null)
-    const [filter,setFilter]=useState<{status?:TaskStatus; priority?: 'low'|'medium'|'high'}>({});
+    const [filter,setFilter]=useState<{status?:TaskStatus; priority?: 'low'|'medium'|'high'; sortByDate?:'date-asc'|'date-desc'}>({});
     const handleAddTask = (formData: TaskFormData) => {
         const newTask: Task = {
             id:crypto.randomUUID(),
@@ -48,7 +49,7 @@ export default function Dashboard() {
             setFormDisplay(true)
             setEditingTask(taskToEdit)
     }
-    const handleFilterChange=(newFilter:{status?: TaskStatus; priority?:'low'|'medium'|'high'})=>{
+    const handleFilterChange=(newFilter:{status?: TaskStatus; priority?:'low'|'medium'|'high'; sortByDate?:'date-asc'|'date-desc'})=>{
        setFilter((prev)=>({...prev,...newFilter}));
     };
     const filteredTasks = tasks.filter((task)=>{
@@ -56,7 +57,9 @@ export default function Dashboard() {
         if(filter.priority && task.priority !== filter.priority) return false;
         return true;
     })
-    const taskListprops:TaskListProps={task:filteredTasks,onStatusChange:handleChange,onDelete:handleDelete,onEdit:handleEdit}
+    const finalTask =sortTask(filteredTasks,filter.sortByDate);
+    console.log(finalTask)
+    const taskListprops:TaskListProps={task:finalTask,onStatusChange:handleChange,onDelete:handleDelete,onEdit:handleEdit}
    console.log(filteredTasks)
     return (
         <div className="min-h-screen flex flex-col p-5 bg-gradient-to-br from-slate-100 via-slate-50 to-blue-100 text-slate-800 gap-10">
