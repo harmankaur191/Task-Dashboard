@@ -11,11 +11,13 @@ export interface TaskListProps{
     task:Task[];
     onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
     onDelete: (taskId: string) => void;
+    onEdit:(taskId: string)=>void
 }
 export interface TaskItemProps{
    task:Task
     onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   onDelete?: (taskId: string) => void;
+  onEdit:(taskId: string)=>void
 }
 
 export interface TaskFilterProps{
@@ -32,5 +34,7 @@ export interface TaskFormData {
   dueDate: string;
 }
 export interface TaskFormProps{
-    onAddTask:(formData:TaskFormData)=>void
+    onAddTask?:(formData:TaskFormData)=>void
+    onUpdateTask?:(taskId:string,editingTask:TaskFormData)=>void
+    editingTask?:Task|null
 }
