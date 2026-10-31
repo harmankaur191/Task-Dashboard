@@ -64,25 +64,25 @@ export default function TaskForm(props: TaskFormProps) {
         })
     }
     return (
-        <form onSubmit={handleForm} className="flex flex-col max-w-md p-5 gap-2 border-gray-200 border-2" >
+        <form onSubmit={handleForm} className="flex flex-col max-w-md p-5 gap-2 border-blue-900 border-2" >
             <label>Task Name</label>
-            <input type="text" name="taskName" value={formData.taskName} placeholder="Enter task Name" onChange={handleChange} required />
+            <input type="text" name="taskName" className ="rounded-lg" value={formData.taskName} placeholder="Enter task Name" onChange={handleChange} required />
             <label>Task Descritpion</label>
-            <input type="text" name="taskDescription" value={formData.taskDescription} placeholder="Enter task description" onChange={handleChange} required />
+            <input type="text" name="taskDescription"  className ="rounded-lg" value={formData.taskDescription} placeholder="Enter task description" onChange={handleChange} required />
             <label>Status</label>
-            <select id="status" name="status" value={formData.status} onChange={handleChange} required>
+            <select id="status" className ="rounded-lg" name="status" value={formData.status} onChange={handleChange} required>
                 <option value="pending">Pending</option>
                 <option value="in-progress">In-Progress</option>
                 <option value="completed">Completed</option>
             </select>
             <label>Priority</label>
-            <select id="priority" name="priority" value={formData.priority} onChange={handleChange} required>
+            <select id="priority" className ="rounded-lg" name="priority" value={formData.priority} onChange={handleChange} required>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
             <label>Due Date</label>
-            <input type="date" name="dueDate" value={formData.dueDate} onChange={handleChange} required />
+            <input type="date" name="dueDate" value={formData.dueDate} className ="rounded-lg" onChange={handleChange} required />
             <button type="submit" className="rounded-lg bg-gray-900 text-white p-2">{editingTask?'Update Task':'Create Task'}</button>
         </form>
     )

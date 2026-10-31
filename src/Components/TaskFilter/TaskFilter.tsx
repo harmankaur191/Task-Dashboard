@@ -14,20 +14,20 @@ export default function TaskFilter({onFilterChange}:TaskFilterProps){
     };
     
     return(
-        <section>
-            <select id="status" onChange={handleChange}>
+        <section className="flex gap-5">
+            <select id="status" onChange={handleChange} className="rounded-xl p-1">
                 <option id = 'all' value="all">All Statuses</option>
                 <option  id = 'pending' value="pending">Pending</option>
                 <option id = 'in-progress' value="in-progress">In-Progress</option>
                 <option id = 'completed' value="completed">Completed</option>
             </select>
-            <select id='priority' onChange={handleChange}>
+            <select id='priority' onChange={handleChange} className="rounded-xl p-1">
                 <option  id = 'all' value="all">All Priority</option>
                 <option id = 'high' value="high">High</option>
                 <option id = 'medium' value='medium'>Medium</option>
                 <option id = 'low' value='low'>Low</option>
             </select>
-            <select id="sortByDate" onChange={handleChange}>
+            <select id="sortByDate" onChange={handleChange} className="rounded-xl p-1">
                
                 <option value="none">Sortby Due Date</option>
                 <option value="date-asc">Soonest</option>

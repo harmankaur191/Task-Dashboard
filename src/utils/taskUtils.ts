@@ -1,5 +1,6 @@
 import type {Task} from '../types'
 
+
 export default function sortTask(tasks:Task[],sortByDate?:'date-asc'|'date-desc'){
     if(!sortByDate){
         return tasks;
@@ -16,5 +17,21 @@ export default function sortTask(tasks:Task[],sortByDate?:'date-asc'|'date-desc'
             }
         });
     };
+
+}
+
+export function search(tasks:Task[]=[], searchTask:string=""):Task[]{
+    if(!tasks) return [];
+    if(!searchTask){
+        console.log('Task not found');
+        return tasks;
+    }
+    const lowerSearchTask = searchTask.toLowerCase();
+      return tasks.filter((task)=>{
+            return task.title.toLowerCase().includes(lowerSearchTask)
+        }
+
+        
+    )
 
 }

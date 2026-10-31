@@ -4,11 +4,14 @@ import TaskList from '../TaskList/TaskList'
 import type { TaskFormData, Task, TaskListProps, TaskFilterProps, TaskStatus } from "../../types";
 import TaskFilter from "../TaskFilter/TaskFilter";
 import sortTask from "../../utils/taskUtils";
+import SearchBar from "../SearchBar/SearchBar";
+import {search} from "../../utils/taskUtils";
 export default function Dashboard() {
     const [formDisplay, setFormDisplay] = useState(false);
     const [tasks,setTask]=useState<Task[]>([])
     const [editingTask,setEditingTask] = useState<Task|null>(null)
     const [filter,setFilter]=useState<{status?:TaskStatus; priority?: 'low'|'medium'|'high'; sortByDate?:'date-asc'|'date-desc'}>({});
+    const [searchItem, setSearchItem]=useState("")
     const handleAddTask = (formData: TaskFormData) => {
         const newTask: Task = {
             id:crypto.randomUUID(),
@@ -57,18 +60,28 @@ export default function Dashboard() {
         if(filter.priority && task.priority !== filter.priority) return false;
         return true;
     })
-    const finalTask =sortTask(filteredTasks,filter.sortByDate);
+    const searchedTasks = search(filteredTasks, searchItem)
+    const finalTask =sortTask(searchedTasks,filter.sortByDate);
     console.log(finalTask)
+   
+
+   
     const taskListprops:TaskListProps={task:finalTask,onStatusChange:handleChange,onDelete:handleDelete,onEdit:handleEdit}
    console.log(filteredTasks)
     return (
         <div className="min-h-screen flex flex-col p-5 bg-gradient-to-br from-slate-100 via-slate-50 to-blue-100 text-slate-800 gap-10">
             <h1>Dashboard-Manage your tasks</h1>
-            <button type="submit" className="bg-blue-900 text-white p-1 max-w-fit justify-self-end" onClick={() => setFormDisplay(true)}>Add Task</button>
-           <TaskFilter onFilterChange={handleFilterChange}/>
-            {formDisplay && (<TaskForm onAddTask={handleAddTask} onUpdateTask={handleUpdateTask} editingTask={editingTask}/>)}
+            <section className="flex gap-5">
+                <button type="submit" className="bg-blue-900 text-white p-1 max-w-fit justify-self-end rounded-lg" onClick={() => setFormDisplay(true)}>Add Task</button>
+            <SearchBar onSearchChange={setSearchItem}/>
+            </section>
             
-            {tasks.length!==0 && <TaskList {...taskListprops}/>}
+           <TaskFilter onFilterChange={handleFilterChange}/>
+            { formDisplay && (<TaskForm onAddTask={handleAddTask} onUpdateTask={handleUpdateTask} editingTask={editingTask}/>)}
+            
+            {!searchItem && tasks.length!==0 && <TaskList {...taskListprops}/>}
+             {searchItem && tasks.length!==0 && <TaskList {...taskListprops}/>}
+
            
         </div>
 
