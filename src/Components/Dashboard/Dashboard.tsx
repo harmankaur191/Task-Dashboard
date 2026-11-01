@@ -4,9 +4,10 @@ import TaskForm from "../TaskForm/TaskForm";
 import TaskList from '../TaskList/TaskList'
 import type { TaskFormData, Task, TaskListProps, TaskFilterProps, TaskStatus } from "../../types";
 import TaskFilter from "../TaskFilter/TaskFilter";
-import sortTask, { onPageLoad } from "../../utils/taskUtils";
+import sortTask, { displayStatistics, onPageLoad } from "../../utils/taskUtils";
 import SearchBar from "../SearchBar/SearchBar";
 import {search} from "../../utils/taskUtils";
+import ProgressBar from "../progressBar";
 export default function Dashboard() {
     const [formDisplay, setFormDisplay] = useState(false);
     const [tasks,setTask]=useState<Task[]>(()=>onPageLoad())
@@ -30,6 +31,8 @@ export default function Dashboard() {
     }
     useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
+ 
+
 }, [tasks]);
 
     const handleChange=(e)=>{}
@@ -82,6 +85,7 @@ export default function Dashboard() {
         <div className="min-h-screen flex flex-col p-5 bg-gradient-to-br from-slate-100 via-slate-50 to-blue-100 text-slate-800 gap-10">
             
             <h1>Dashboard-Manage your tasks</h1>
+            <ProgressBar tasks={tasks}/>
             <section className="flex gap-5">
                 <button type="submit" className="bg-blue-900 text-white p-1 max-w-fit justify-self-end rounded-lg" onClick={() => setFormDisplay(true)}>Add Task</button>
             <SearchBar onSearchChange={setSearchItem}/>
