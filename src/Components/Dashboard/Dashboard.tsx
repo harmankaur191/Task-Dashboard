@@ -1,14 +1,15 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from '../TaskList/TaskList'
 import type { TaskFormData, Task, TaskListProps, TaskFilterProps, TaskStatus } from "../../types";
 import TaskFilter from "../TaskFilter/TaskFilter";
-import sortTask from "../../utils/taskUtils";
+import sortTask, { onPageLoad } from "../../utils/taskUtils";
 import SearchBar from "../SearchBar/SearchBar";
 import {search} from "../../utils/taskUtils";
 export default function Dashboard() {
     const [formDisplay, setFormDisplay] = useState(false);
-    const [tasks,setTask]=useState<Task[]>([])
+    const [tasks,setTask]=useState<Task[]>(()=>onPageLoad())
     const [editingTask,setEditingTask] = useState<Task|null>(null)
     const [filter,setFilter]=useState<{status?:TaskStatus; priority?: 'low'|'medium'|'high'; sortByDate?:'date-asc'|'date-desc'}>({});
     const [searchItem, setSearchItem]=useState("")
@@ -22,13 +23,14 @@ export default function Dashboard() {
             dueDate:formData.dueDate
         };
         console.log(newTask)
-        setTask((prev)=>[newTask,...prev]);
-       
+        const updatedTasks =[newTask,...tasks]
+        setTask((tasks)=> updatedTasks);
         setFormDisplay(false)
         
-
- 
     }
+    useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}, [tasks]);
 
     const handleChange=(e)=>{}
     const handleDelete=(taskId:string)=>{
@@ -51,6 +53,7 @@ export default function Dashboard() {
         console.log("Editing task",editingTask)
             setFormDisplay(true)
             setEditingTask(taskToEdit)
+         
     }
     const handleFilterChange=(newFilter:{status?: TaskStatus; priority?:'low'|'medium'|'high'; sortByDate?:'date-asc'|'date-desc'})=>{
        setFilter((prev)=>({...prev,...newFilter}));
@@ -64,12 +67,20 @@ export default function Dashboard() {
     const finalTask =sortTask(searchedTasks,filter.sortByDate);
     console.log(finalTask)
    
-
+    // useEffect(()=>{
+    //     const savedTasks = onPageLoad();
+    //     if(savedTasks){
+    //         console.log(savedTasks)
+    //         setTask(savedTasks)
+    //     }
+        
+    // },[])
    
     const taskListprops:TaskListProps={task:finalTask,onStatusChange:handleChange,onDelete:handleDelete,onEdit:handleEdit}
    console.log(filteredTasks)
     return (
         <div className="min-h-screen flex flex-col p-5 bg-gradient-to-br from-slate-100 via-slate-50 to-blue-100 text-slate-800 gap-10">
+            
             <h1>Dashboard-Manage your tasks</h1>
             <section className="flex gap-5">
                 <button type="submit" className="bg-blue-900 text-white p-1 max-w-fit justify-self-end rounded-lg" onClick={() => setFormDisplay(true)}>Add Task</button>

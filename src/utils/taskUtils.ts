@@ -35,3 +35,10 @@ export function search(tasks:Task[]=[], searchTask:string=""):Task[]{
     )
 
 }
+
+export function onPageLoad(){
+    const savedTasks = localStorage.getItem('tasks');
+    const initalTasks = savedTasks ? JSON.parse(savedTasks):[];
+    console.log(initalTasks);
+    return initalTasks;
+}
