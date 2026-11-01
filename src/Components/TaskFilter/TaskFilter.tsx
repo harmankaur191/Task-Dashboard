@@ -14,7 +14,7 @@ export default function TaskFilter({onFilterChange}:TaskFilterProps){
     };
     
     return(
-        <section className="flex gap-5">
+        <section className="flex gap-3">
             <select id="status" onChange={handleChange} className="rounded-xl p-1">
                 <option id = 'all' value="all">All Statuses</option>
                 <option  id = 'pending' value="pending">Pending</option>
